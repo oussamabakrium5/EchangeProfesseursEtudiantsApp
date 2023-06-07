@@ -5,7 +5,7 @@ using EchangeProfesseursEtudiantsApp.Models;
 
 namespace EchangeProfesseursEtudiantsApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public class AppUsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

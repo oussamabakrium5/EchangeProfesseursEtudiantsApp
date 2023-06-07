@@ -11,6 +11,8 @@ namespace EchangeProfesseursEtudiantsApp.Data
         }
 
         public DbSet<ApplicationUser> applicationUsers { get; set; }
+
+        public DbSet<Group> Groups { get; set; }
     }
 
 

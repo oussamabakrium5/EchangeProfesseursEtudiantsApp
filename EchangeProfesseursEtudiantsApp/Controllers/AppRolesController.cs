@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EchangeProfesseursEtudiantsApp.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles= "Administrator")]
     public class AppRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

@@ -26,9 +26,17 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
         // GET: Groups
         public async Task<IActionResult> Index()
         {
-              return _context.Groups != null ? 
-                          View(await _context.Groups.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Groups'  is null.");
+
+            var tables = new GroupViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList()
+            };
+
+            return View(tables);
+            /*return _context.Groups != null ? 
+                        View(await _context.Groups.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Groups'  is null.");*/
         }
 
         // GET: Groups/Details/5
@@ -46,7 +54,23 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
                 return NotFound();
             }
 
-            return View(@group);
+            var tables = new GroupViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList()
+            };
+
+            tables.Groups.FirstOrDefault().Id = @group.Id;
+            tables.Groups.FirstOrDefault().Name = @group.Name;
+            tables.Groups.FirstOrDefault().Description = @group.Description;
+            tables.Groups.FirstOrDefault().applicationuser = @group.applicationuser;
+            tables.applicationusers.FirstOrDefault().Email = @group.applicationuser.Email;
+            tables.applicationusers.FirstOrDefault().Firstname = @group.applicationuser.Firstname;
+            tables.applicationusers.FirstOrDefault().Lastname = @group.applicationuser.Lastname;
+
+            return View(tables);
+
+            /*return View(@group);*/
         }
 
         // GET: Groups/Create
@@ -99,7 +123,20 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
             {
                 return NotFound();
             }
-            return View(@group);
+
+            var tables = new GroupViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList()
+            };
+
+            tables.Groups.FirstOrDefault().Id = @group.Id;
+            tables.Groups.FirstOrDefault().Name = @group.Name;
+            tables.Groups.FirstOrDefault().Description = @group.Description;
+            tables.Groups.FirstOrDefault().applicationuser = @group.applicationuser;
+            tables.applicationusers.FirstOrDefault().Email = @group.applicationuser.Email;
+
+            return View(tables);
         }
 
         // POST: Groups/Edit/5
@@ -107,9 +144,31 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Group @group)
+        public async Task<IActionResult> Edit(int id, Group item, ApplicationUser user)
         {
-            if (id != @group.Id)
+            int i = 0;
+            foreach (var categ in _context.applicationUsers)
+            {
+                if (item.applicationuser.Email ==categ.Email)
+                {
+                    item.applicationuser.Id = categ.Id;
+                    item.applicationuser.Firstname = categ.Firstname;
+                    item.applicationuser.Lastname = categ.Lastname;
+                    item.applicationuser = categ;
+                    i = 1;
+                    break;
+                }
+            }
+
+            if (i== 1)
+            {
+                _context.Groups.Update(item);
+                _context.SaveChanges();
+            }
+            
+            return RedirectToAction("Index");
+
+            /*if (id != @group.Id)
             {
                 return NotFound();
             }
@@ -134,7 +193,7 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@group);
+            return View(@group);*/
         }
 
         // GET: Groups/Delete/5
@@ -152,19 +211,35 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
                 return NotFound();
             }
 
-            return View(@group);
+            var tables = new GroupViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList()
+            };
+
+            tables.Groups.FirstOrDefault().Id = @group.Id;
+            tables.Groups.FirstOrDefault().Name = @group.Name;
+            tables.Groups.FirstOrDefault().Description = @group.Description;
+            tables.Groups.FirstOrDefault().applicationuser = @group.applicationuser;
+            tables.applicationusers.FirstOrDefault().Email = @group.applicationuser.Email;
+            tables.applicationusers.FirstOrDefault().Firstname = @group.applicationuser.Firstname;
+            tables.applicationusers.FirstOrDefault().Lastname = @group.applicationuser.Lastname;
+
+            return View(tables);
+
+            /*return View(@group);*/
         }
 
         // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, Group item, ApplicationUser user)
         {
             if (_context.Groups == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Groups'  is null.");
             }
-            var @group = await _context.Groups.FindAsync(id);
+            var @group = await _context.Groups.FindAsync(item.Id);
             if (@group != null)
             {
                 _context.Groups.Remove(@group);
@@ -177,6 +252,125 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
         private bool GroupExists(int id)
         {
           return (_context.Groups?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public IActionResult Addindex(int id)
+        {
+
+            var tables = new StudentViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList(),
+                students = _context.Students.ToList()
+            };
+
+            tables.Groups.FirstOrDefault().Id = id;
+
+            return View(tables);
+        }
+
+        public IActionResult Add(int id)
+        {
+
+            var tables = new StudentViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList(),
+                students = _context.Students.ToList()
+            };
+
+            tables.Groups.FirstOrDefault().Id = id ;
+
+            return View(tables);
+        }
+
+        // POST: Groups/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(Group item, ApplicationUser user, Student student)
+        {
+
+            foreach (var categ in _context.applicationUsers)
+            {
+                if (categ.Email == user.Email)
+                {
+                    student.applicationuser = categ;
+                    break;
+                }
+            }
+
+            foreach (var categ in _context.Groups)
+            {
+                if (categ.Id == item.Id)
+                {
+                    student.group = categ;
+                    break;
+                }
+            }
+
+            student.Id = null;
+
+            _context.Students.Add(student);
+            _context.SaveChanges();
+            return RedirectToAction("Addindex", item.Id);
+
+            /*return RedirectToAction(nameof(Index));*/
+        }
+
+
+        public async Task<IActionResult> Deletestudent(string? id)
+        {
+            if (id == null || _context.Students == null)
+            {
+                return NotFound();
+            }
+
+            var @student = await _context.Students
+                .FirstOrDefaultAsync(m => m.applicationuser.Id == id);
+            if (@student == null)
+            {
+                return NotFound();
+            }
+
+            var tables = new StudentViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList(),
+                students = _context.Students.ToList()
+            };
+
+            tables.Groups.FirstOrDefault().Id = @student.group.Id;
+            tables.Groups.FirstOrDefault().Name = @student.group.Name;
+            tables.Groups.FirstOrDefault().Description = @student.group.Description;
+            tables.Groups.FirstOrDefault().applicationuser = @student.applicationuser;
+            tables.applicationusers.FirstOrDefault().Email = @student.applicationuser.Email;
+            tables.applicationusers.FirstOrDefault().Firstname = @student.applicationuser.Firstname;
+            tables.applicationusers.FirstOrDefault().Lastname = @student.applicationuser.Lastname;
+
+            return View(tables);
+
+            /*return View(@group);*/
+        }
+
+        // POST: Groups/Delete/5
+        [HttpPost, ActionName("Deletestudent")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletestudentConfirmed(Student student, int id, Group item, ApplicationUser user)
+        {
+            if (_context.Students == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Groups'  is null.");
+            }
+            var @studentb = await _context.Students.FindAsync(student.Id);
+            if (@studentb != null)
+            {
+                _context.Students.Remove(@studentb);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Addindex", @studentb.group.Id);
         }
     }
 }

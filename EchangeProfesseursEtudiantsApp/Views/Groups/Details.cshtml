@@ -1,4 +1,5 @@
-﻿@model EchangeProfesseursEtudiantsApp.Models.Group
+﻿@*@model EchangeProfesseursEtudiantsApp.Models.Group*@
+@model EchangeProfesseursEtudiantsApp.ViewModel.GroupViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,20 +12,37 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(m => Model.Groups.FirstOrDefault().Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(m => Model.Groups.FirstOrDefault().Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(m => Model.applicationusers.FirstOrDefault().Firstname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(m => Model.applicationusers.FirstOrDefault().Lastname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(m => Model.applicationusers.FirstOrDefault().Email)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

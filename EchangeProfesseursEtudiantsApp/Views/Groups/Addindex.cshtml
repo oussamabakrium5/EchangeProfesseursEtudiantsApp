@@ -1,15 +1,23 @@
 ﻿@*@model IEnumerable<EchangeProfesseursEtudiantsApp.Models.Group>*@
-@model EchangeProfesseursEtudiantsApp.ViewModel.GroupViewModel
+@model EchangeProfesseursEtudiantsApp.ViewModel.StudentViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Add Index";
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+@foreach (var obj in Model.Groups)
+{
+    if (obj.Id == Model.Groups.FirstOrDefault().Id)
+    {
+        <p>
+            <a asp-action="Add" asp-route-id="@obj.Id">Add New</a>
+        </p>
+    }
+}
+
 @*<table class="table">
     <thead>
         <tr>
@@ -46,7 +54,6 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Name)</th>
-            <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Description)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)</th>
@@ -54,11 +61,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in Model.Groups)
+        @foreach(var obj in Model.students)
         {
             <tr>
-                <td>@obj.Name</td>
-                <td>@obj.Description</td>
+                <td>@obj.group.Name</td>
                 <td>
                         @foreach( var item in Model.applicationusers)
                         {
@@ -89,11 +95,8 @@
                         }
                     }
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@obj.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@obj.Id">Details</a> |
-                    <a asp-action="AddIndex" asp-route-id="@obj.Id">Add</a> |
-                    <a asp-action="Delete" asp-route-id="@obj.Id">Delete</a>
+                <td>   
+                    <a asp-action="Deletestudent" asp-route-id="@obj.applicationuser.Id">Delete</a>
                 </td>
                 @*<td>
                     <div class="w-75 btn-group" role="group">
@@ -104,4 +107,8 @@
             </tr>
         }
     </tbody>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 </table>

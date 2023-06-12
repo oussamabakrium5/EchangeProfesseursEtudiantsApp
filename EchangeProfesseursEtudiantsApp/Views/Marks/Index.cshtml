@@ -1,0 +1,72 @@
+﻿@*@model IEnumerable<EchangeProfesseursEtudiantsApp.Models.Mark>*@
+@model EchangeProfesseursEtudiantsApp.ViewModel.MarkViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    int? i = 0;
+}
+
+<h1>Index</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => Model.elements.FirstOrDefault().Nameelement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => Model.marks.FirstOrDefault().themark)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                    @Html.DisplayFor(m => Model.applicationusers.FirstOrDefault().Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.applicationusers.FirstOrDefault().Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.applicationusers.FirstOrDefault().Email)
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.elements.FirstOrDefault().Nameelement)
+            </td>
+            <td>
+            @foreach (var obj in Model.marks)
+            {
+                if (obj.elementmark.Idelement == Model.elements.FirstOrDefault().Idelement || obj.applicationusermark.Email == Model.applicationusers.FirstOrDefault().Email)
+                {
+                        @obj.themark;
+                        Model.marks.FirstOrDefault().Idmark = obj.Idmark;
+                        i = 1;
+                        break;
+                }
+            }
+            </td>
+            @if(i==0)
+            {
+                <td>
+                    <a asp-action="Create" asp-route-ide="@Model.elements.FirstOrDefault().Idelement" asp-route-email="@Model.applicationusers.FirstOrDefault().Email">Set</a>
+                </td>
+            } else
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-ide="@Model.elements.FirstOrDefault().Idelement" asp-route-email="@Model.applicationusers.FirstOrDefault().Email" asp-route-idm="@Model.marks.FirstOrDefault().Idmark">Edit</a>
+                </td>
+            }
+            
+        </tr>
+
+    </tbody>
+</table>

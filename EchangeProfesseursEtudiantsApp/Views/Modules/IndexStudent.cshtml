@@ -1,0 +1,118 @@
+﻿@*@model IEnumerable<EchangeProfesseursEtudiantsApp.Models.Group>*@
+@model EchangeProfesseursEtudiantsApp.ViewModel.StudentViewModel
+
+@{
+    ViewData["Title"] = "Add Index";
+}
+
+<h1>Index</h1>
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@
+
+<table class="table table-border table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Namegroup)</th>
+            <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)</th>
+            <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)</th>
+            <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model.students)
+        {
+            <tr>
+                <td>@obj.groupstudent.Namegroup</td>
+                <td>
+                        @foreach( var item in Model.applicationusers)
+                        {
+                            if (item == @obj.applicationuserstudent)
+                            {
+                                @item.Firstname
+                                break;
+                            }
+                        }
+                </td>
+                <td>
+                    @foreach (var item in Model.applicationusers)
+                    {
+                        if (item == @obj.applicationuserstudent)
+                        {
+                            @item.Lastname
+                            break;
+                        }
+                    }
+                </td>
+                <td>
+                    @foreach (var item in Model.applicationusers)
+                    {
+                        if (item == @obj.applicationuserstudent)
+                        {
+                            @item.Email
+                            break;
+                        }
+                    }
+                </td>
+                @foreach(var ele in Model.elements)
+                {
+                    @foreach (var item in Model.applicationusers)
+                    {
+                        if (item == @obj.applicationuserstudent)
+                        {
+                            <td>
+                                <a asp-action="index" asp-controller="Marks" asp-route-email="@item.Email" asp-route-ide="@ele.Idelement">Mark</a>
+                            </td>
+                            break;
+                        }
+                    
+                    
+                    }
+                    break;
+                }
+                
+@*                @if (User.IsInRole("Teacher"))
+                {
+                    <td>
+                        <a asp-action="setmark" asp-controller="Mark" asp-route-id="@obj.applicationuserstudent.Id">Mark</a>
+                    </td>
+                }*@
+                @*<td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="FraisStandard" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                        <a asp-controller="FraisStandard" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2"> <i class="fa fa-trash-fill"></i> Delete</a>                    
+                    </div>
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>

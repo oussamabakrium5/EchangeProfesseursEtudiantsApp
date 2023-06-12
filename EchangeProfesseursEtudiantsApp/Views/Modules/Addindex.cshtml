@@ -19,38 +19,6 @@
     }
 }
 
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-*@
-
 <table class="table table-border table-striped" style="width:100%">
     <thead>
         <tr>
@@ -63,8 +31,10 @@
         </tr>
     </thead>
     <tbody>
+        
         @foreach(var obj in Model.elements)
         {
+            <tr>
             @if (obj.moduleelement.Idmodule == Model.modules.FirstOrDefault().Idmodule)
             {
             <td>@obj.Nameelement</td>
@@ -77,20 +47,14 @@
                 <a asp-action="Editelement" asp-route-id="@obj.Idelement">Edit</a> |
                     @foreach (var item in Model.Groups)
                     {
-                <a asp-controller="Groups" asp-action="AddIndex" asp-route-id="@item.Idgroup">Students</a>
+                <a asp-controller="Modules" asp-action="IndexStudent" asp-route-id="@item.Idgroup" asp-route-ide="@obj.Idelement">Students</a>
                     }
                 had joz mzal matdaroch!!!!
             </td>
             }
-        }
-                @*<td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="FraisStandard" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
-                        <a asp-controller="FraisStandard" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2"> <i class="fa fa-trash-fill"></i> Delete</a>                    
-                    </div>
-                </td>*@
             </tr>
         }
+        
     </tbody>
 
     <div>

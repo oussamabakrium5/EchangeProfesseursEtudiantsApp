@@ -26,7 +26,7 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
         }
 
         // GET: Modules
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int? id, int? ide)
         {
 
             var tables = new ModuleViewModel
@@ -389,6 +389,24 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
             return RedirectToAction("Addindex", item.Idmodule);
 
             /*return RedirectToAction(nameof(Index));*/
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public IActionResult IndexStudent(int id, int? ide)
+        {
+
+            var tables = new StudentViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList(),
+                students = _context.Students.ToList(),
+                elements = _context.Elements.ToList()
+            };
+
+            tables.Groups.FirstOrDefault().Idgroup = id;
+            tables.elements.FirstOrDefault().Idelement = ide;
+
+            return View(tables);
         }
 
     }

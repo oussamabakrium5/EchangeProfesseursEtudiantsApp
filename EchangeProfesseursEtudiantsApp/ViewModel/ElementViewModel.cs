@@ -7,5 +7,6 @@ namespace EchangeProfesseursEtudiantsApp.ViewModel
         public IEnumerable<ApplicationUser> applicationusers { get; set; }
         public IEnumerable<Module> modules { get; set; }
         public IEnumerable<Element> elements { get; set; }
+        public IEnumerable<Group> Groups { get; set; }
     }
 }

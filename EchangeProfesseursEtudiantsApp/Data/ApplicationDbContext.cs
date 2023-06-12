@@ -17,6 +17,7 @@ namespace EchangeProfesseursEtudiantsApp.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Element> Elements { get; set; }
+        public DbSet<Mark> Marks { get; set; }
 
 
     }

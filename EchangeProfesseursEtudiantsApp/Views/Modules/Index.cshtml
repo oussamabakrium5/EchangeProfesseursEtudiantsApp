@@ -56,7 +56,7 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@obj.Idmodule">Edit</a> |
                     <a asp-action="Details" asp-route-id="@obj.Idmodule">Details</a> |
-                    <a asp-action="AddIndex" asp-route-id="@obj.Idmodule">Add</a> |
+                    <a asp-action="AddIndex" asp-route-id="@obj.Idmodule" asp-route-idg="@obj.groupmodule.Idgroup">Add</a> |
                     <a asp-action="Delete" asp-route-id="@obj.Idmodule">Delete</a> |
                     <a asp-controller="Groups" asp-action="AddIndex" asp-route-id="@obj.groupmodule.Idgroup">Students</a>
 

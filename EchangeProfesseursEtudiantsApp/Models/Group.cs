@@ -6,7 +6,7 @@ namespace EchangeProfesseursEtudiantsApp.Models
 	public class Group
 	{
         [Key]
-        public int Idgroup { get; set; }
+        public int? Idgroup { get; set; }
         
         [ForeignKey("IdUser")]
         public ApplicationUser applicationusergroup { get; set; }

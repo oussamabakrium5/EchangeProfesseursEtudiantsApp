@@ -307,14 +307,15 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
-        public IActionResult AddIndex(int id)
+        public IActionResult AddIndex(int id, int idg)
         {
 
             var tables = new ElementViewModel
             {
                 applicationusers = _context.applicationUsers.ToList(),
                 modules = _context.Modules.ToList(),
-                elements = _context.Elements.ToList()
+                elements = _context.Elements.ToList(),
+                Groups = _context.Groups.ToList(),
             };
 
             tables.modules.FirstOrDefault().Idmodule = id;
@@ -326,6 +327,7 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
                 }
 
             }
+            tables.Groups.FirstOrDefault().Idgroup = idg;
 
 
             return View(tables);

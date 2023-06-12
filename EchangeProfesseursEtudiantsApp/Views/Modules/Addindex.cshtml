@@ -74,7 +74,11 @@
             <td>@obj.applicationuserelement.Email</td>
             <td>
                 <a asp-action="Deleteelement" asp-route-id="@obj.Idelement">Delete</a> |
-                <a asp-action="Editelement" asp-route-id="@obj.Idelement">Edit</a>
+                <a asp-action="Editelement" asp-route-id="@obj.Idelement">Edit</a> |
+                    @foreach (var item in Model.Groups)
+                    {
+                <a asp-controller="Groups" asp-action="AddIndex" asp-route-id="@item.Idgroup">Students</a>
+                    }
                 had joz mzal matdaroch!!!!
             </td>
             }

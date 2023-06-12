@@ -1,0 +1,54 @@
+﻿@*@model EchangeProfesseursEtudiantsApp.Models.Module*@
+@model EchangeProfesseursEtudiantsApp.ViewModel.ModuleViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Module</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(m => Model.modules.FirstOrDefault().Namemodule)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(m => Model.modules.FirstOrDefault().Namemodule)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(m => Model.modules.FirstOrDefault().Descriptionmodule)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(m => Model.modules.FirstOrDefault().Descriptionmodule)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(m => Model.modules.FirstOrDefault().Coefficientmodule)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(m => Model.modules.FirstOrDefault().Coefficientmodule)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(m => Model.modules.FirstOrDefault().applicationusermodule.Firstname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(m => Model.modules.FirstOrDefault().applicationusermodule.Firstname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(m => Model.modules.FirstOrDefault().applicationusermodule.Lastname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(m => Model.modules.FirstOrDefault().applicationusermodule.Lastname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(m => Model.modules.FirstOrDefault().applicationusermodule.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(m => Model.modules.FirstOrDefault().applicationusermodule.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

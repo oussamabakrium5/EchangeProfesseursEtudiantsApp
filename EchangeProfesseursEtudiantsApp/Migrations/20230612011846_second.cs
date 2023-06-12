@@ -5,44 +5,47 @@
 namespace EchangeProfesseursEtudiantsApp.Migrations
 {
     /// <inheritdoc />
-    public partial class third : Migration
+    public partial class second : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "Elements",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Idelement = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IdGroup = table.Column<int>(type: "int", nullable: false),
                     IdUser = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IdGroup = table.Column<int>(type: "int", nullable: false)
+                    Nameelement = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descriptionelement = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Coefficientelement = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_Elements", x => x.Idelement);
                     table.ForeignKey(
-                        name: "FK_Students_AspNetUsers_IdUser",
+                        name: "FK_Elements_AspNetUsers_IdUser",
                         column: x => x.IdUser,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Students_Groups_IdGroup",
+                        name: "FK_Elements_Modules_IdGroup",
                         column: x => x.IdGroup,
-                        principalTable: "Groups",
-                        principalColumn: "Id",
+                        principalTable: "Modules",
+                        principalColumn: "Idmodule",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_IdGroup",
-                table: "Students",
+                name: "IX_Elements_IdGroup",
+                table: "Elements",
                 column: "IdGroup");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_IdUser",
-                table: "Students",
+                name: "IX_Elements_IdUser",
+                table: "Elements",
                 column: "IdUser");
         }
 
@@ -50,7 +53,7 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Elements");
         }
     }
 }

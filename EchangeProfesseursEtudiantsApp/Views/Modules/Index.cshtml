@@ -1,0 +1,69 @@
+﻿@*@model IEnumerable<EchangeProfesseursEtudiantsApp.Models.Module>*@
+
+@model EchangeProfesseursEtudiantsApp.ViewModel.ModuleViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" asp-route-id="@Model.Groups.FirstOrDefault().Idgroup">Create New</a>
+</p>
+
+<p>@Html.DisplayFor(m => Model.Groups.FirstOrDefault().Namegroup)</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => Model.modules.FirstOrDefault().Namemodule)</th>
+            <th>@Html.DisplayNameFor(m => Model.modules.FirstOrDefault().Descriptionmodule)</th>
+            <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)</th>
+            <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)</th>
+            <th>@Html.DisplayNameFor(m => Model.modules.FirstOrDefault().Coefficientmodule)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var obj in Model.modules)
+        {
+            <tr>
+                <td>@obj.Namemodule</td>
+                <td>@obj.Descriptionmodule</td>
+                <td>
+                    @foreach (var item in Model.applicationusers)
+                    {
+                        if (item == @obj.applicationusermodule)
+                        {
+                            @item.Firstname
+                            break;
+                        }
+                    }
+                </td>
+                <td>
+                    @foreach (var item in Model.applicationusers)
+                    {
+                        if (item == @obj.applicationusermodule)
+                        {
+                            @item.Lastname
+                            break;
+                        }
+                    }
+                </td>
+                <td>@obj.Coefficientmodule</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@obj.Idmodule">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@obj.Idmodule">Details</a> |
+                    <a asp-action="AddIndex" asp-route-id="@obj.Idmodule">Add</a> |
+                    <a asp-action="Delete" asp-route-id="@obj.Idmodule">Delete</a>
+
+                </td>
+            </tr>
+
+            }
+            
+}
+    </tbody>
+</table>

@@ -22,39 +22,20 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Group", b =>
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Element", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Idelement")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Idelement"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdUser")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdUser");
-
-                    b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int?>("Coefficientelement")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Descriptionelement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdGroup")
                         .HasColumnType("int");
@@ -62,7 +43,94 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                     b.Property<string>("IdUser")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Nameelement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Idelement");
+
+                    b.HasIndex("IdGroup");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Elements");
+                });
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Group", b =>
+                {
+                    b.Property<int>("Idgroup")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Idgroup"));
+
+                    b.Property<string>("Descriptiongroup")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdUser")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Namegroup")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Idgroup");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Module", b =>
+                {
+                    b.Property<int?>("Idmodule")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Idmodule"));
+
+                    b.Property<int?>("Coefficientmodule")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descriptionmodule")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdGroup")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdUser")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Namemodule")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Idmodule");
+
+                    b.HasIndex("IdGroup");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Modules");
+                });
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Student", b =>
+                {
+                    b.Property<int?>("Idstudent")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Idstudent"));
+
+                    b.Property<int>("IdGroup")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdUser")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Idstudent");
 
                     b.HasIndex("IdGroup");
 
@@ -296,30 +364,64 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Group", b =>
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Element", b =>
                 {
-                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.ApplicationUser", "applicationuser")
-                        .WithMany()
-                        .HasForeignKey("IdUser");
-
-                    b.Navigation("applicationuser");
-                });
-
-            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Student", b =>
-                {
-                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.Group", "group")
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.Module", "moduleelement")
                         .WithMany()
                         .HasForeignKey("IdGroup")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.ApplicationUser", "applicationuser")
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.ApplicationUser", "applicationuserelement")
                         .WithMany()
                         .HasForeignKey("IdUser");
 
-                    b.Navigation("applicationuser");
+                    b.Navigation("applicationuserelement");
 
-                    b.Navigation("group");
+                    b.Navigation("moduleelement");
+                });
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Group", b =>
+                {
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.ApplicationUser", "applicationusergroup")
+                        .WithMany()
+                        .HasForeignKey("IdUser");
+
+                    b.Navigation("applicationusergroup");
+                });
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Module", b =>
+                {
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.Group", "groupmodule")
+                        .WithMany()
+                        .HasForeignKey("IdGroup")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.ApplicationUser", "applicationusermodule")
+                        .WithMany()
+                        .HasForeignKey("IdUser");
+
+                    b.Navigation("applicationusermodule");
+
+                    b.Navigation("groupmodule");
+                });
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Student", b =>
+                {
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.Group", "groupstudent")
+                        .WithMany()
+                        .HasForeignKey("IdGroup")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.ApplicationUser", "applicationuserstudent")
+                        .WithMany()
+                        .HasForeignKey("IdUser");
+
+                    b.Navigation("applicationuserstudent");
+
+                    b.Navigation("groupstudent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

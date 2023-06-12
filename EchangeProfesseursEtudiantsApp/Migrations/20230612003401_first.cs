@@ -159,6 +159,79 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Idgroup = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdUser = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Namegroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descriptiongroup = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Idgroup);
+                    table.ForeignKey(
+                        name: "FK_Groups_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Modules",
+                columns: table => new
+                {
+                    Idmodule = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdGroup = table.Column<int>(type: "int", nullable: false),
+                    IdUser = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Namemodule = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descriptionmodule = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Coefficientmodule = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modules", x => x.Idmodule);
+                    table.ForeignKey(
+                        name: "FK_Modules_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Modules_Groups_IdGroup",
+                        column: x => x.IdGroup,
+                        principalTable: "Groups",
+                        principalColumn: "Idgroup",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Idstudent = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdUser = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IdGroup = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Idstudent);
+                    table.ForeignKey(
+                        name: "FK_Students_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Students_Groups_IdGroup",
+                        column: x => x.IdGroup,
+                        principalTable: "Groups",
+                        principalColumn: "Idgroup",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -197,6 +270,31 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Groups_IdUser",
+                table: "Groups",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Modules_IdGroup",
+                table: "Modules",
+                column: "IdGroup");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Modules_IdUser",
+                table: "Modules",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_IdGroup",
+                table: "Students",
+                column: "IdGroup");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_IdUser",
+                table: "Students",
+                column: "IdUser");
         }
 
         /// <inheritdoc />
@@ -218,7 +316,16 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Modules");
+
+            migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -41,9 +41,18 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Groups" asp-action="index">Class</a>
                             </li>
 
-                        } else
+                        }
+                        else if (User.IsInRole("Teacher"))
                         {
-                            
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Groups" asp-action="indexteacher" asp-route-user="@UserManager.GetUserName(User)">Class</a>
+                            </li>
+                        }
+                        else if (User.IsInRole("Student"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Groups" asp-action="indexstudent" asp-route-user="@UserManager.GetUserName(User)">Class</a>
+                            </li>
                         }
 
                         <li class="nav-item">

@@ -45,8 +45,8 @@
 <table class="table table-border table-striped" style="width:100%">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Name)</th>
-            <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Description)</th>
+            <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Namegroup)</th>
+            <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Descriptiongroup)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)</th>
@@ -57,12 +57,12 @@
         @foreach(var obj in Model.Groups)
         {
             <tr>
-                <td>@obj.Name</td>
-                <td>@obj.Description</td>
+                <td>@obj.Namegroup</td>
+                <td>@obj.Descriptiongroup</td>
                 <td>
                         @foreach( var item in Model.applicationusers)
                         {
-                            if (item == @obj.applicationuser)
+                            if (item == @obj.applicationusergroup)
                             {
                                 @item.Firstname
                                 break;
@@ -72,7 +72,7 @@
                 <td>
                     @foreach (var item in Model.applicationusers)
                     {
-                        if (item == @obj.applicationuser)
+                        if (item == @obj.applicationusergroup)
                         {
                             @item.Lastname
                             break;
@@ -82,7 +82,7 @@
                 <td>
                     @foreach (var item in Model.applicationusers)
                     {
-                        if (item == @obj.applicationuser)
+                        if (item == @obj.applicationusergroup)
                         {
                             @item.Email
                             break;
@@ -90,11 +90,12 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@obj.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@obj.Id">Details</a> |
-                    <a asp-action="AddIndex" asp-route-id="@obj.Id">Add</a> |
-                    <a asp-action="Delete" asp-route-id="@obj.Id">Delete</a>
-                </td>
+                    <a asp-action="Edit" asp-route-id="@obj.Idgroup">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@obj.Idgroup">Details</a> |
+                    <a asp-action="AddIndex" asp-route-id="@obj.Idgroup">Add</a> |
+                    <a asp-action="Delete" asp-route-id="@obj.Idgroup">Delete</a>
+                        
+                        </td>
                 @*<td>
                     <div class="w-75 btn-group" role="group">
                         <a asp-controller="FraisStandard" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>

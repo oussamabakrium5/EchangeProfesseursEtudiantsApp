@@ -6,12 +6,12 @@ namespace EchangeProfesseursEtudiantsApp.Models
     public class Student
     {
         [Key]
-        public int? Id { get; set; }
+        public int? Idstudent { get; set; }
 
         [ForeignKey("IdUser")]
-        public ApplicationUser applicationuser { get; set; }
+        public ApplicationUser applicationuserstudent { get; set; }
 
         [ForeignKey("IdGroup")]
-        public Group group { get; set; }
+        public Group groupstudent { get; set; }
     }
 }

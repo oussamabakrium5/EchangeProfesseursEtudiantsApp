@@ -13,20 +13,20 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Groups.FirstOrDefault().Id" />
+            <input type="hidden" asp-for="Groups.FirstOrDefault().Idgroup" />
             <div class="form-group">
-                <label asp-for="Groups.FirstOrDefault().Name" class="control-label"></label>
-                <input asp-for="Groups.FirstOrDefault().Name" class="form-control" />
+                <label asp-for="Groups.FirstOrDefault().Namegroup" class="control-label"></label>
+                <input asp-for="Groups.FirstOrDefault().Namegroup" class="form-control" />
                 @*<span asp-validation-for="Groups.FirstOrDefault().Name" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="Groups.FirstOrDefault().Description" class="control-label"></label>
-                <input asp-for="Groups.FirstOrDefault().Description" class="form-control" />
+                <label asp-for="Groups.FirstOrDefault().Descriptiongroup" class="control-label"></label>
+                <input asp-for="Groups.FirstOrDefault().Descriptiongroup" class="form-control" />
                 @*<span asp-validation-for="Groups.FirstOrDefault().Description" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="Groups.FirstOrDefault().applicationuser.Email" class="control-label"></label>
-                <input asp-for="Groups.FirstOrDefault().applicationuser.Email" class="form-control" />
+                <label asp-for="Groups.FirstOrDefault().applicationusergroup.Email" class="control-label"></label>
+                <input asp-for="Groups.FirstOrDefault().applicationusergroup.Email" class="form-control" />
                 @*<span asp-validation-for="Groups.FirstOrDefault().Description" class="text-danger"></span>*@
             </div>
             <div class="form-group">

@@ -6,14 +6,14 @@ namespace EchangeProfesseursEtudiantsApp.Models
 	public class Group
 	{
         [Key]
-        public int Id { get; set; }
+        public int Idgroup { get; set; }
         
         [ForeignKey("IdUser")]
-        public ApplicationUser applicationuser { get; set; }
+        public ApplicationUser applicationusergroup { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Namegroup { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string Descriptiongroup { get; set; }
 	}
 }

@@ -1,5 +1,5 @@
 ﻿@*@model IEnumerable<EchangeProfesseursEtudiantsApp.Models.Group>*@
-@model EchangeProfesseursEtudiantsApp.ViewModel.StudentViewModel
+@model EchangeProfesseursEtudiantsApp.ViewModel.ElementViewModel
 
 @{
     ViewData["Title"] = "Add Index";
@@ -8,12 +8,13 @@
 <h1>Index</h1>
 
 
-@foreach (var obj in Model.Groups)
+@foreach (var obj in Model.modules)
 {
-    if (obj.Idgroup == Model.Groups.FirstOrDefault().Idgroup)
+    if (obj.Idmodule == Model.modules.FirstOrDefault().Idmodule)
     {
         <p>
-            <a asp-action="Add" asp-route-id="@obj.Idgroup">Add New</a>
+            <p>@obj.Namemodule</p>
+            <a asp-action="Add" asp-route-id="@obj.Idmodule">Add Element</a>
         </p>
     }
 }
@@ -53,7 +54,8 @@
 <table class="table table-border table-striped" style="width:100%">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m => Model.Groups.FirstOrDefault().Namegroup)</th>
+            <th>@Html.DisplayNameFor(m => Model.elements.FirstOrDefault().Nameelement)</th>
+            <th>@Html.DisplayNameFor(m => Model.elements.FirstOrDefault().Descriptionelement)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)</th>
@@ -61,43 +63,22 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in Model.students)
+        @foreach(var obj in Model.elements)
         {
-            <tr>
-                <td>@obj.groupstudent.Namegroup</td>
-                <td>
-                        @foreach( var item in Model.applicationusers)
-                        {
-                            if (item == @obj.applicationuserstudent)
-                            {
-                                @item.Firstname
-                                break;
-                            }
-                        }
-                </td>
-                <td>
-                    @foreach (var item in Model.applicationusers)
-                    {
-                        if (item == @obj.applicationuserstudent)
-                        {
-                            @item.Lastname
-                            break;
-                        }
-                    }
-                </td>
-                <td>
-                    @foreach (var item in Model.applicationusers)
-                    {
-                        if (item == @obj.applicationuserstudent)
-                        {
-                            @item.Email
-                            break;
-                        }
-                    }
-                </td>
-                <td>   
-                    <a asp-action="Deletestudent" asp-route-id="@obj.applicationuserstudent.Id">Delete</a>
-                </td>
+            @if (obj.moduleelement.Idmodule == Model.modules.FirstOrDefault().Idmodule)
+            {
+            <td>@obj.Nameelement</td>
+            <td>@obj.Descriptionelement</td>
+            <td>@obj.applicationuserelement.Firstname</td>
+            <td>@obj.applicationuserelement.Lastname</td>
+            <td>@obj.applicationuserelement.Email</td>
+            <td>
+                <a asp-action="Deleteelement" asp-route-id="@obj.Idelement">Delete</a> |
+                <a asp-action="Editelement" asp-route-id="@obj.Idelement">Edit</a>
+                had joz mzal matdaroch!!!!
+            </td>
+            }
+        }
                 @*<td>
                     <div class="w-75 btn-group" role="group">
                         <a asp-controller="FraisStandard" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>

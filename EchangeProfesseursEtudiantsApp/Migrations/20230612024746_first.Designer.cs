@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EchangeProfesseursEtudiantsApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230612003401_first")]
+    [Migration("20230612024746_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -24,6 +24,40 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Element", b =>
+                {
+                    b.Property<int?>("Idelement")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Idelement"));
+
+                    b.Property<int?>("Coefficientelement")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descriptionelement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdGroup")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdUser")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Nameelement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Idelement");
+
+                    b.HasIndex("IdGroup");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Elements");
+                });
 
             modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Group", b =>
                 {
@@ -331,6 +365,23 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Element", b =>
+                {
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.Module", "moduleelement")
+                        .WithMany()
+                        .HasForeignKey("IdGroup")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EchangeProfesseursEtudiantsApp.Models.ApplicationUser", "applicationuserelement")
+                        .WithMany()
+                        .HasForeignKey("IdUser");
+
+                    b.Navigation("applicationuserelement");
+
+                    b.Navigation("moduleelement");
                 });
 
             modelBuilder.Entity("EchangeProfesseursEtudiantsApp.Models.Group", b =>

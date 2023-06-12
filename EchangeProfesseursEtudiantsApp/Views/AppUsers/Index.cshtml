@@ -1,5 +1,6 @@
-﻿@using Microsoft.AspNetCore.Identity
-@model IEnumerable<IdentityUser>
+﻿@*@using Microsoft.AspNetCore.Identity*@
+@*@model IEnumerable<IdentityUser>*@
+@model EchangeProfesseursEtudiantsApp.ViewModel.UsersViewModel
 
 @{
 	ViewData["Title"] = "Application Users";
@@ -15,21 +16,26 @@
 	<thead>
 
 		<tr>
-			<th>@Html.DisplayNameFor(model => model.Id)</th>
-			<th>@Html.DisplayNameFor(model => model.Email)</th>
+			<th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Id)</th>
+			<th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)</th>
+			<th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)</th>
+			<th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)</th>
 			<th></th>
 		</tr>
 
 	</thead>
 
 	<tbody>
-		@foreach(var item in Model)
+		@foreach(var item in Model.applicationusers)
 		{
 			<tr>
-				<td>@Html.DisplayFor(modelItem => item.Id)</td>
-				<td>@Html.DisplayFor(modelItem => item.Email)</td>
+				<td>@item.Id</td>
+				<td>@item.Firstname</td>
+				<td>@item.Lastname</td>
+				<td>@item.Email</td>
 			</tr>
 		}
+
 	</tbody>
 
 </table>

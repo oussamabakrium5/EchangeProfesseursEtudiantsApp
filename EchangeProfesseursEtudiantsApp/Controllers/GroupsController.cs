@@ -262,7 +262,7 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
           return (_context.Groups?.Any(e => e.Idgroup == id)).GetValueOrDefault();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Teacher")]
         public IActionResult Addindex(int id)
         {
 
@@ -402,6 +402,25 @@ namespace EchangeProfesseursEtudiantsApp.Controllers
             {
                 Groups = _context.Groups.ToList(),
                 applicationusers = _context.applicationUsers.ToList()
+            };
+
+            tables.applicationusers.FirstOrDefault().Email = user;
+
+            return View(tables);
+            /*return _context.Groups != null ? 
+                        View(await _context.Groups.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Groups'  is null.");*/
+        }
+
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> Indexstudent(string user)
+        {
+
+            var tables = new StudentViewModel
+            {
+                Groups = _context.Groups.ToList(),
+                applicationusers = _context.applicationUsers.ToList(),
+                students = _context.Students.ToList()
             };
 
             tables.applicationusers.FirstOrDefault().Email = user;

@@ -232,6 +232,34 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Elements",
+                columns: table => new
+                {
+                    Idelement = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdGroup = table.Column<int>(type: "int", nullable: false),
+                    IdUser = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Nameelement = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descriptionelement = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Coefficientelement = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Elements", x => x.Idelement);
+                    table.ForeignKey(
+                        name: "FK_Elements_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Elements_Modules_IdGroup",
+                        column: x => x.IdGroup,
+                        principalTable: "Modules",
+                        principalColumn: "Idmodule",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -270,6 +298,16 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Elements_IdGroup",
+                table: "Elements",
+                column: "IdGroup");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Elements_IdUser",
+                table: "Elements",
+                column: "IdUser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_IdUser",
@@ -316,13 +354,16 @@ namespace EchangeProfesseursEtudiantsApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Modules");
+                name: "Elements");
 
             migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Modules");
 
             migrationBuilder.DropTable(
                 name: "Groups");

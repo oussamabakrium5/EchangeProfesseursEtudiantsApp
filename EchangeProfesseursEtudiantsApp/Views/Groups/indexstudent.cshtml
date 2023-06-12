@@ -1,5 +1,5 @@
 ﻿@*@model IEnumerable<EchangeProfesseursEtudiantsApp.Models.Group>*@
-@model EchangeProfesseursEtudiantsApp.ViewModel.GroupViewModel
+@model EchangeProfesseursEtudiantsApp.ViewModel.StudentViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -47,17 +47,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in Model.Groups)
+        @foreach(var obj in Model.students)
         {
-            @if(obj.applicationusergroup.Email == Model.applicationusers.FirstOrDefault().Email)
+            @if(obj.applicationuserstudent.Email == Model.applicationusers.FirstOrDefault().Email)
             {
 
                 <tr>
-                    <td>@obj.Namegroup</td>
-                    <td>@obj.Descriptiongroup</td>
+                    <td>@obj.groupstudent.Namegroup</td>
+                    <td>@obj.groupstudent.Descriptiongroup</td>
                     <td>
-                        <a asp-controller="Modules" asp-action="index" asp-route-id="@obj.Idgroup">Modules</a>
-                        <a asp-controller="Groups" asp-action="AddIndex" asp-route-id="@obj.Idgroup">Students</a>
+                        <a asp-controller="Modules" asp-action="indexstudent" asp-route-id="@obj.groupstudent.Idgroup">modules</a>
                     </td>
                 </tr>
                 

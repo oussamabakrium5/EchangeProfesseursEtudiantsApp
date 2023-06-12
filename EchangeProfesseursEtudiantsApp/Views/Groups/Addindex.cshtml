@@ -7,14 +7,16 @@
 
 <h1>Index</h1>
 
-
-@foreach (var obj in Model.Groups)
+@if (User.IsInRole("Administrator"))
 {
-    if (obj.Idgroup == Model.Groups.FirstOrDefault().Idgroup)
+    @foreach (var obj in Model.Groups)
     {
-        <p>
-            <a asp-action="Add" asp-route-id="@obj.Idgroup">Add New</a>
-        </p>
+        if (obj.Idgroup == Model.Groups.FirstOrDefault().Idgroup)
+        {
+            <p>
+                <a asp-action="Add" asp-route-id="@obj.Idgroup">Add New</a>
+            </p>
+        }
     }
 }
 
@@ -57,7 +59,10 @@
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Firstname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Lastname)</th>
             <th>@Html.DisplayNameFor(m => Model.applicationusers.FirstOrDefault().Email)</th>
-            <th></th>
+            @if (User.IsInRole("Administrator"))
+            {
+                <th></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -95,9 +100,12 @@
                         }
                     }
                 </td>
-                <td>   
-                    <a asp-action="Deletestudent" asp-route-id="@obj.applicationuserstudent.Id">Delete</a>
-                </td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <td>   
+                        <a asp-action="Deletestudent" asp-route-id="@obj.applicationuserstudent.Id">Delete</a>
+                    </td>
+                }
                 @*<td>
                     <div class="w-75 btn-group" role="group">
                         <a asp-controller="FraisStandard" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
@@ -107,8 +115,10 @@
             </tr>
         }
     </tbody>
-
+    @if (User.IsInRole("Administrator"))
+    {
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
+    }
 </table>
